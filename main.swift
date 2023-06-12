@@ -1,4 +1,3 @@
-
 class Arrocha {
   var lowestNumber: Int
   var biggestNumber: Int
@@ -9,7 +8,7 @@ class Arrocha {
     self.lowestNumber = 1
     self.biggestNumber = 100
     self.drawnNumber = Int.random(in: 1..<100)
-    self.gameState = State.STARTED("The game have just started")
+    self.gameState = State.STARTED
   }
 
   func makeGuess(guess: Int) {
@@ -24,31 +23,39 @@ class Arrocha {
   }
 
   func lose() {
-    self.gameState = State.LOSE("You lose!")
+    self.gameState = State.LOSE
+    print("You lose.")
   }
 
   func adjustBiggestNumber(guess: Int) {
     self.biggestNumber = guess
-    self.gameState = State.GUESS_BIGGER_THAN_DRAWN_NUMBER("The guess is bigger than the drawn number.")
+    self.gameState = State.GUESS_BIGGER_THAN_DRAWN_NUMBER
+    print("The drawn number is lower than this.")
   }
 
   func adjustLowestNumber(guess: Int) {
     self.lowestNumber = guess
-    self.gameState = State.GUESS_LOWER_THAN_DRAWN_NUMBER("The guess is lower than the drawn number.")
+    self.gameState = State.GUESS_LOWER_THAN_DRAWN_NUMBER
+    print("The drawn number is bigger than this.")
   }
 
   func verifyIfGuessWon() {
     if(self.lowestNumber + 1 == self.biggestNumber - 1) {
-      self.gameState = State.WON("Game won!")
+      self.gameState = State.WON
+      print("You won!")
     }
+  }
+
+  func gameOver() -> Bool {
+    return self.gameState == State.WON || self.gameState == State.LOSE
   }
   
   enum State {
-    case STARTED(String)
-    case WON(String)
-    case LOSE(String)
-    case GUESS_LOWER_THAN_DRAWN_NUMBER(String)
-    case GUESS_BIGGER_THAN_DRAWN_NUMBER(String)
+    case STARTED
+    case WON
+    case LOSE
+    case GUESS_LOWER_THAN_DRAWN_NUMBER
+    case GUESS_BIGGER_THAN_DRAWN_NUMBER
   }
 }
 
@@ -56,10 +63,11 @@ var arrocha = Arrocha()
 print("Drawn Number: \(arrocha.drawnNumber)")
 var guess = ""
 
-while(guess != "STOP") {
-  if var guess = readLine(), var validGuess = Int(guess) {
+print("Guess the number between 1 and 100!")
+
+while(!arrocha.gameOver()) {
+  if let guess = readLine(), let validGuess = Int(guess) {
     arrocha.makeGuess(guess: validGuess)
-    print(arrocha.gameState)
   } else {
     print("Invalid input.")
   }
