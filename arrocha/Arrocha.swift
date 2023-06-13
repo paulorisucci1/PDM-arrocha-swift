@@ -1,3 +1,12 @@
+//
+//  Arrocha.swift
+//  arrocha
+//
+//  Created by ifpb on 12/06/23.
+//
+
+import Foundation
+
 class Arrocha {
   var lowestNumber: Int
   var biggestNumber: Int
@@ -56,19 +65,5 @@ class Arrocha {
     case LOSE
     case GUESS_LOWER_THAN_DRAWN_NUMBER
     case GUESS_BIGGER_THAN_DRAWN_NUMBER
-  }
-}
-
-var arrocha = Arrocha()
-print("Drawn Number: \(arrocha.drawnNumber)")
-var guess = ""
-
-print("Guess the number between 1 and 100!")
-
-while(!arrocha.gameOver()) {
-  if let guess = readLine(), let validGuess = Int(guess) {
-    arrocha.makeGuess(guess: validGuess)
-  } else {
-    print("Invalid input.")
   }
 }
